@@ -1,10 +1,10 @@
 <img src="images/logo.png" width="80%">
 
-##### WWWE: What's Wrong With my Email? </br> A tool to help you check if your email(s) have appeared in a breach!
+#### WWWE: What's Wrong With my Email? </br> A tool to help you check if your email(s) have appeared in a data-breach!
 [![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) [![](https://img.shields.io/badge/Made%20with-python-yellow.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.0-green.svg)
 * * *
 
-`WWWE.py` is a standalone python script that checks an email or a list of emails against popular online services to see it the email(s) appear on any breach happened in the past. The online services used are:
+`WWWE.py` is a standalone python script that checks an email or a list of emails using popular online services to see it the email(s) appear on any security-breach happened in the past. The online services used are:
 
 - [x] [HaveIBeenPwned](https://haveibeenpwned.com)
 - [x] [HaveIBeenSold](https://haveibeensold.app)
