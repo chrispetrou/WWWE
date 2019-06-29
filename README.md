@@ -1,7 +1,6 @@
 <img src="images/logo.png" width="80%">
 
-##### WWWE: What's Wrong With my Email?
-##### A tool to help you check if your email(s) have leaked!
+##### WWWE: What's Wrong With my Email? </br> A tool to help you check if your email(s) have leaked!
 [![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) [![](https://img.shields.io/badge/Made%20with-python-yellow.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.0-green.svg)
 * * *
 
