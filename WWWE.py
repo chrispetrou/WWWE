@@ -11,10 +11,9 @@ import sys
 import time
 import warnings
 import requests
-from urllib import quote_plus
-from datetime import datetime
 from selenium import webdriver
 warnings.filterwarnings("ignore")
+from urllib.parse import quote_plus
 from colorama import Fore,Back,Style
 from argparse import ArgumentParser, ArgumentTypeError, RawTextHelpFormatter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -57,8 +56,8 @@ def ValidateFile(file):
 def urlencode(cmd):
     try:
         return quote_plus(cmd)
-    except Exception, error:
-        print '{}[x] Error:{} "{}"'.format(RD, RA, error)
+    except Exception as error:
+        print('{}[x] Error:{} "{}"'.format(RD, RA, error))
 
 
 def inoitsu(email):
@@ -71,7 +70,7 @@ def inoitsu(email):
                 'submit' : 'Submit'}
             r = s.post(endpoint, data=creds)
             return True if 'BREACH DETECTED!' in r.text else False
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
@@ -81,7 +80,7 @@ def HIBP(email):
         with requests.Session() as s:
             r = s.get(endpoint)
             return True if r.status_code != 404 else False
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
@@ -97,7 +96,7 @@ def HIBS(email):
                 return False if 'Your email is not on any sold list' in d.find_element_by_id('success').text else True
             except:
                 return False
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
@@ -112,7 +111,7 @@ def leakedsource(email):
                 'submit' : 'Search'}
             r = s.post(endpoint, data=creds)
             return False if 'No results found' in r.text else True
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
@@ -130,7 +129,7 @@ def hackcheck(email):
             elem.submit()
             time.sleep(1)
             return d.find_elements_by_tag_name('img')[3].get_attribute('alt') != 'Ok icon'
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
@@ -145,71 +144,71 @@ def dehashed(email):
                 if email in h5.get_attribute('textContent'):
                     found = True
             return True if found else False
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
 def check(email):
     results = {}
     try:
-        print '{0}[*]{1} Check {2} using {0}haveibeenpwned.com{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}haveibeenpwned.com{1} online service'.format(C, RA, email))
         pwned = HIBP(email)
         ret(.1)
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}haveibeenpwned.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}haveibeenpwned.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['HIBP'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}haveibeenpwned.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}haveibeenpwned.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['HIBP'] = "safe"
 
-        print '{0}[*]{1} Check {2} using {0}inoitsu.com{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}inoitsu.com{1} online service'.format(C, RA, email))
         pwned = inoitsu(email)
         ret(.1)
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}inoitsu.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}inoitsu.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['inoitsu'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}inoitsu.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}inoitsu.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['inoitsu'] = "safe"
 
-        print '{0}[*]{1} Check {2} using {0}leakedsource.ru{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}leakedsource.ru{1} online service'.format(C, RA, email))
         pwned = leakedsource(email)
         ret(.1)
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}leakedsource.ru{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}leakedsource.ru{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['leakedsource'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}leakedsource.ru{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}leakedsource.ru{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['leakedsource'] = "safe"
 
-        print '{0}[*]{1} Check {2} using {0}avast-hackcheck{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}avast-hackcheck{1} online service'.format(C, RA, email))
         pwned = hackcheck(email)
         ret(.1) 
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}avast-hackcheck{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}avast-hackcheck{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['hackcheck'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}avast-hackcheck{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}avast-hackcheck{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['hackcheck'] = "safe"
 
-        print '{0}[*]{1} Check {2} using {0}dehashed.com{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}dehashed.com{1} online service'.format(C, RA, email))
         pwned = dehashed(email)
         ret(.1)
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}dehashed.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}dehashed.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['dehashed'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}dehashed.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}dehashed.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['dehashed'] = "safe"
 
-        print '{0}[*]{1} Check {2} using {0}haveibeensold.app{1} online service'.format(C, RA, email)
+        print('{0}[*]{1} Check {2} using {0}haveibeensold.app{1} online service'.format(C, RA, email))
         pwned = HIBS(email)
         ret(.1)
         if pwned:
-            print '{0}[x]{2} Unfortunately according to {1}haveibeensold.app{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email)
+            print('{0}[x]{2} Unfortunately according to {1}haveibeensold.app{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['HIBS'] = "leaked"
         else:
-            print '{0}[+]{2} Congrats! According to {1}haveibeensold.app{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email)
+            print('{0}[+]{2} Congrats! According to {1}haveibeensold.app{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['HIBS'] = "safe"
 
     except KeyboardInterrupt:
@@ -220,12 +219,12 @@ def check(email):
 if __name__ == '__main__':
     args = console()
     if args.email and is_valid(args.email):
-        print '\n{0}[!]{2} Checking {1}{3}{2}:'.format(B, IT, RA, args.email)
+        print('\n{0}[!]{2} Checking {1}{3}{2}:'.format(B, IT, RA, args.email))
         check(args.email)
     else:
         with open(args.file) as f:
-            valid_emails = filter(lambda x: is_valid(x), f.read().splitlines())
+            valid_emails = [x for x in f.read().splitlines() if is_valid(x)]
             for email in valid_emails:
-                print '\n{0}[!]{2} Checking {1}{3}{2}:'.format(B, IT, RA, email)
+                print('\n{0}[!]{2} Checking {1}{3}{2}:'.format(B, IT, RA, email))
                 check(email)
 #_EOF
