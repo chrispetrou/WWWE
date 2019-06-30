@@ -1,17 +1,20 @@
 <img src="images/logo.png" width="80%">
 
 #### WWWE: What's Wrong With my Email? </br> A tool to help you check if your email(s) have appeared in a data-breach!
-[![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) [![](https://img.shields.io/badge/Made%20with%20python-3-lightgreen.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.0-lightgray.svg)
+[![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) 
+[![](https://img.shields.io/badge/Made%20with%20python-3-lightgreen.svg)](https://www.python.org/) 
+![version](https://img.shields.io/badge/version-1.0-lightgray.svg) 
+[![Known Vulnerabilities](https://snyk.io//test/github/chrispetrou/WWWE/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/chrispetrou/WWWE?targetFile=requirements.txt)
 * * *
 
 `WWWE.py` is a standalone python script that checks an email or a list of emails using popular online services to see it the email(s) appear on any security-breach happened in the past. The online services used are:
 
-- [x] [HaveIBeenPwned](https://haveibeenpwned.com)
-- [x] [HaveIBeenSold](https://haveibeensold.app)
-- [x] [inoitsu](https://www.hotsheet.com/inoitsu/)
-- [x] [LEAKEDSOURCE](https://leakedsource.ru/)
-- [x] [hack check](https://www.avast.com/hackcheck/friends-check/)
-- [x] [DEHASHED](https://www.dehashed.com)
+- [x] [__HaveIBeenPwned__](https://haveibeenpwned.com)
+- [x] [__HaveIBeenSold__](https://haveibeensold.app)
+- [x] [__inoitsu__](https://www.hotsheet.com/inoitsu/)
+- [x] [__LEAKEDSOURCE__](https://leakedsource.ru/)
+- [x] [__hack__ check](https://www.avast.com/hackcheck/friends-check/)
+- [x] [__DEHASHED__](https://www.dehashed.com)
 
 ```
 python WWWE.py -h
