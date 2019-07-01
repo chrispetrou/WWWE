@@ -4,7 +4,6 @@
 __author__      = 'Christophoros Petrou (game0ver)'
 __description__ = "wwwe.py: What's Wrong With my Email?"
 
-
 import os
 import re
 import sys
@@ -87,16 +86,20 @@ def HIBP(email):
 def HIBS(email):
     endpoint = 'https://haveibeensold.app'
     try:
-        with webdriver.PhantomJS() as d:
+        os.environ['MOZ_HEADLESS'] = '1'
+        cap = DesiredCapabilities().FIREFOX
+        cap["marionette"] = True
+        with webdriver.Firefox(capabilities=cap) as d:
             d.get(endpoint)
             elem = d.find_element_by_name("email")
             elem.send_keys(email)
             d.find_element_by_id('check').click()
+            time.sleep(1)
             try:
                 return False if 'Your email is not on any sold list' in d.find_element_by_id('success').text else True
             except:
-                return False
-    except Exception as error:
+                return True
+    except Exception, error:
         raise(error)
 
 
