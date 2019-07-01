@@ -41,6 +41,7 @@ But you also need to install:
 
 ### TODO
 - [ ] Add the ability to save the results in csv format (_work in progress_).
+- [ ] Provide results in a __json__ format also, so the results be _easily_ used and accessed by other tools.
 
 ### Contributions & Feedback
 
