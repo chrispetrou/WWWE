@@ -38,6 +38,27 @@ def ret(t):
     time.sleep(t)
 
 
+def request_exceptions():
+    def decorate(f):
+        def fnc(*args, **kwargs):
+            try:
+                return f(*args,**kwargs)
+            except requests.exceptions.ConnectionError:
+                ret(.1)
+                print('{}[x] {}: Connection Error!{}\n'.format(RD, f.__name__, RA))
+            except requests.exceptions.TooManyRedirects:
+                ret(.1)
+                print('{}[x] {}: Too many redirects!{}\n'.format(RD, f.__name__, RA))
+            except requests.exceptions.Timeout:
+                ret(.1)
+                print('{}[x] {}: Timeout Error!{}\n'.format(RD, f.__name__, RA))
+            except Exception as error:
+                ret(.1)
+                print('Error\n')
+        return fnc
+    return decorate
+
+
 def is_valid(email):
     email_ptrn = re.compile(r'[^@\s]+@[^@\s]+\.[^@\s]+')
     return True if email_ptrn.match(email) else False
@@ -59,28 +80,24 @@ def urlencode(cmd):
         print('{}[x] Error:{} "{}"'.format(RD, RA, error))
 
 
+@request_exceptions()
 def inoitsu(email):
     endpoint = 'https://www.hotsheet.com/inoitsu/'
-    try:
-        with requests.Session() as s:
-            creds = {
-                'act' : email,
-                'accounthide' : 'test',
-                'submit' : 'Submit'}
-            r = s.post(endpoint, data=creds)
-            return True if 'BREACH DETECTED!' in r.text else False
-    except Exception as error:
-        raise(error)
+    with requests.Session() as s:
+        creds = {
+            'act' : email,
+            'accounthide' : 'test',
+            'submit' : 'Submit'}
+        r = s.post(endpoint, data=creds)
+        return True if 'BREACH DETECTED!' in r.text else False
 
 
+@request_exceptions()
 def HIBP(email):
     endpoint = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(urlencode(email))
-    try:
-        with requests.Session() as s:
-            r = s.get(endpoint)
-            return True if r.status_code != 404 else False
-    except Exception as error:
-        raise(error)
+    with requests.Session() as s:
+        r = s.get(endpoint)
+        return True if r.status_code != 404 else False
 
 
 def HIBS(email):
@@ -103,19 +120,17 @@ def HIBS(email):
         raise(error)
 
 
+@request_exceptions()
 def leakedsource(email):
     endpoint = 'https://leakedsource.ru/'
-    try:
-        with requests.Session() as s:
-            creds = {
-                'search' : email,
-                'searchType' : '3',
-                'wildcard' : 'true',
-                'submit' : 'Search'}
-            r = s.post(endpoint, data=creds)
-            return False if 'No results found' in r.text else True
-    except Exception as error:
-        raise(error)
+    with requests.Session() as s:
+        creds = {
+            'search' : email,
+            'searchType' : '3',
+            'wildcard' : 'true',
+            'submit' : 'Search'}
+        r = s.post(endpoint, data=creds)
+        return False if 'No results found' in r.text else True
 
 
 def hackcheck(email):
@@ -160,7 +175,7 @@ def check(email):
         if pwned:
             print('{0}[x]{2} Unfortunately according to {1}haveibeenpwned.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['HIBP'] = "leaked"
-        else:
+        elif pwned == False:
             print('{0}[+]{2} Congrats! According to {1}haveibeenpwned.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['HIBP'] = "safe"
 
@@ -170,7 +185,7 @@ def check(email):
         if pwned:
             print('{0}[x]{2} Unfortunately according to {1}inoitsu.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['inoitsu'] = "leaked"
-        else:
+        elif pwned == False:
             print('{0}[+]{2} Congrats! According to {1}inoitsu.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['inoitsu'] = "safe"
 
@@ -180,7 +195,7 @@ def check(email):
         if pwned:
             print('{0}[x]{2} Unfortunately according to {1}leakedsource.ru{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['leakedsource'] = "leaked"
-        else:
+        elif pwned == False:
             print('{0}[+]{2} Congrats! According to {1}leakedsource.ru{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
             results['leakedsource'] = "safe"
 
