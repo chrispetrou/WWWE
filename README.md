@@ -13,7 +13,7 @@
 - [x] [__HaveIBeenSold__](https://haveibeensold.app)
 - [x] [__inoitsu__](https://www.hotsheet.com/inoitsu/)
 - [x] [__LEAKEDSOURCE__](https://leakedsource.ru/)
-- [x] [__hack__ check](https://www.avast.com/hackcheck/friends-check/)
+- [x] [**hack_check**](https://www.avast.com/hackcheck/friends-check/)
 - [x] [__DEHASHED__](https://www.dehashed.com)
 
 ```
