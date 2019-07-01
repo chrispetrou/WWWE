@@ -99,7 +99,7 @@ def HIBS(email):
                 return False if 'Your email is not on any sold list' in d.find_element_by_id('success').text else True
             except:
                 return True
-    except Exception, error:
+    except Exception as error:
         raise(error)
 
 
