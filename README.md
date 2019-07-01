@@ -17,8 +17,8 @@
 - [x] [__DEHASHED__](https://www.dehashed.com)
 
 ```
-python WWWE.py -h
-usage: WWWE.py [-h] (-e  | -f )
+$ python WWWE.py -h
+usage: WWWE.py [-h] (-e  | -f ) [--timeout]
 
 WWWE.py: What's Wrong With my Email.
 
@@ -26,7 +26,12 @@ optional arguments:
   -h, --help     show this help message and exit
   -e , --email   Specify an email to check.
   -f , --file    Specify a file that contains a list of emails.
+  --timeout      Specify HTTP connection timeout [default 10 sec]
 ```
+
+### Example
+
+<img src="images/example.png" width="90%">
 
 ### Requirements:
 
