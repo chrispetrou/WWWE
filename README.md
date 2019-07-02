@@ -37,10 +37,10 @@ optional arguments:
 
 > This project requires the following being installed on your system:
 
-*     python-requirements
-*     geckodriver
-*     PhantomJS
-*     Firefox
+*   python-requirements
+*   geckodriver
+*   PhantomJS
+*   Firefox
 
 You can install the first three __automatically__ using the `setup.sh` script (_for the time only Linux/Mac OS are supported_) or __manually__ as follows:
 
