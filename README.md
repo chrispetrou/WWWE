@@ -33,7 +33,16 @@ optional arguments:
 
 <img src="images/example.png" width="90%">
 
-### Requirements:
+### Requirements - Installation:
+
+This project requires the following being installed on your system:
+
+*     _python-requirements_
+*     _geckodriver_
+*     _PhantomJS_
+*     _Firefox_
+
+You can install the first three __automatically__ using the `setup.sh` script (_for the time only Linux/Mac OS are supported_) or __manually__ as follows:
 
 To install the _python-requirements_ :
 
