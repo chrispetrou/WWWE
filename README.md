@@ -3,6 +3,7 @@
 #### WWWE: What's Wrong With my Email? </br> A tool to help you check if your email(s) have appeared in a data-breach!
 [![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) 
 [![](https://img.shields.io/badge/Made%20with%20python-3-lightgreen.svg)](https://www.python.org/) 
+[![Build Status](https://travis-ci.org/chrispetrou/WWWE.svg?branch=master)](https://travis-ci.org/chrispetrou/WWWE) 
 ![version](https://img.shields.io/badge/version-1.0-lightgray.svg) 
 [![Known Vulnerabilities](https://snyk.io//test/github/chrispetrou/WWWE/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/chrispetrou/WWWE?targetFile=requirements.txt)
 * * *
