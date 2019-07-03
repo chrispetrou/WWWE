@@ -5,4 +5,4 @@ python:
   - "3.6"
 install:
   - pip install -r requirements.txt
-script: python3 WWWE.py || python WWWE.py
+script: python3 WWWE.py -h || python WWWE.py -h
