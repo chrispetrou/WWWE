@@ -17,6 +17,9 @@ from colorama import Fore,Back,Style
 from argparse import ArgumentParser, ArgumentTypeError, RawTextHelpFormatter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+os.environ['MOZ_HEADLESS'] = '1'
+cap = DesiredCapabilities().FIREFOX
+cap["marionette"] = True
 TIMEOUT = 10
 B, RA, IT = Style.BRIGHT, Style.RESET_ALL, '\033[3m'
 G, RD, C, R, Y  = Fore.GREEN, Fore.RED, Fore.CYAN, Back.RED, Fore.YELLOW
@@ -106,9 +109,6 @@ def HIBP(email):
 def HIBS(email):
     endpoint = 'https://haveibeensold.app'
     try:
-        os.environ['MOZ_HEADLESS'] = '1'
-        cap = DesiredCapabilities().FIREFOX
-        cap["marionette"] = True
         with webdriver.Firefox(capabilities=cap) as d:
             d.get(endpoint)
             elem = d.find_element_by_name("email")
@@ -138,10 +138,7 @@ def leakedsource(email):
 
 def hackcheck(email):
     found = False
-    endpoint = 'https://www.avast.com/hackcheck/friends-check/' # doesn't mail us back...
-    os.environ['MOZ_HEADLESS'] = '1'
-    cap = DesiredCapabilities().FIREFOX
-    cap["marionette"] = True
+    endpoint = 'https://www.avast.com/hackcheck/friends-check/'
     try:
         with webdriver.Firefox(capabilities=cap) as d:
             d.get(endpoint)
