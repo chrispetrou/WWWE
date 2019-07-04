@@ -1,5 +1,5 @@
-<img src="images/2.png" width="25%">
-<img src="images/1.png" width="30%">
+<img src="images/1.png" width="25%">
+<img src="images/2.png" width="30%">
 
 ##### A tool to help you check if your email(s) have appeared in a data-breach!
 [![GPLv3 license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/chrispetrou/WWWE/blob/master/LICENSE) 
