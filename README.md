@@ -34,7 +34,7 @@ optional arguments:
 
 ### Example
 
-<img src="images/example.png" width="90%">
+<img src="images/example.png" width="80%">
 
 ### Requirements - Installation:
 
