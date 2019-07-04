@@ -86,6 +86,17 @@ def urlencode(cmd):
         print('{}[x] Error:{} "{}"'.format(RD, RA, error))
 
 
+def google_search(email):
+    endpoint = 'https://google.com/search?q={}'.format(email)
+    try:
+        with webdriver.Firefox(capabilities=cap) as d:
+            d.get(endpoint)
+            p_texts = filter(lambda _: len(_.text)!=0, d.find_elements_by_tag_name('p'))
+            return False if email in '\n'.join([_.text for _ in p_texts]) else True
+    except Exception as error:
+        raise(error)
+
+
 @request_exceptions()
 def inoitsu(email):
     endpoint = 'https://www.hotsheet.com/inoitsu/'
@@ -169,6 +180,16 @@ def dehashed(email):
 def check(email):
     results = {}
     try:
+        print('{0}╚══[*]{1} Check {2} using {0}google.com{1} search engine.'.format(C, RA, email))
+        pwned = google_search(email)
+        ret(.1)
+        if pwned == True:
+            print('{0}╚══[x]{2} Unfortunately {0}{3}{2} appears on {1}google.com{2} search-results.'.format(RD, IT, RA, email))
+            results['google'] = "leaked"
+        elif pwned == False:
+            print('{0}╚══[✔︎]{2} Congrats! {0}{3}{2} doesn\'t appear on {1}google.com{2} search-results!'.format(G, IT, RA, email))
+            results['google'] = "safe"
+        
         print('{0}╚══[*]{1} Check {2} using {0}haveibeenpwned.com{1} online service'.format(C, RA, email))
         pwned = HIBP(email)
         ret(.1)
@@ -244,7 +265,7 @@ if __name__ == '__main__':
         with open(args.file) as f:
             valid_emails = filter(lambda x: is_valid(x), f.read().splitlines())
             if valid_emails:
-                print('{0}[*]{2} Loading emails from {1}{3}{2}'.format(C, IT, RA, args.file))
+                print('{0}[*]{2} Loading valid emails from {1}{3}{2}'.format(C, IT, RA, args.file))
                 for email in valid_emails:
                     print('\n{0}╔[!]{3} Checking {1}{2}{4}{3}:'.format(C, B, IT, RA, email))
                     check(email)

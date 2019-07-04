@@ -10,6 +10,7 @@
 
 `WWWE.py` is a standalone python script that checks an email or a list of emails using popular online services to see it the email(s) appear on any security-breach happened in the past. The online services used are:
 
+- [x] [__Google search engine__](https://www.google.com/)
 - [x] [__HaveIBeenPwned__](https://haveibeenpwned.com)
 - [x] [__HaveIBeenSold__](https://haveibeensold.app)
 - [x] [__inoitsu__](https://www.hotsheet.com/inoitsu/)
