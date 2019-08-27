@@ -10,6 +10,7 @@ import sys
 import time
 import warnings
 import requests
+import ConfigParser
 from selenium import webdriver
 warnings.filterwarnings("ignore")
 from urllib.parse import quote_plus
@@ -26,11 +27,11 @@ G, RD, C, R, Y  = Fore.GREEN, Fore.RED, Fore.CYAN, Back.RED, Fore.YELLOW
 
 
 def console():
-    parser = ArgumentParser(description="{}WWWE.py:{} What's Wrong With my Email.".format(B+G, RA),formatter_class=RawTextHelpFormatter)    
+    parser = ArgumentParser(description="{}WWWE.py:{} What's Wrong With my Email.".format(B+G, RA),formatter_class=RawTextHelpFormatter)
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-e', "--email", 
+    group.add_argument('-e', "--email",
                         help='Specify an email to check.', metavar='')
-    group.add_argument('-f', "--file", type=ValidateFile, 
+    group.add_argument('-f', "--file", type=ValidateFile,
                         help='Specify a file that contains a list of emails.', metavar='')
     parser.add_argument("--timeout", type=int, default=10,
                         help="Specify HTTP connection timeout [{0}default {2}{1}10 sec{2}]".format(B, G, RA), metavar='')
@@ -110,10 +111,13 @@ def inoitsu(email):
 
 
 @request_exceptions()
-def HIBP(email):
-    endpoint = 'https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(urlencode(email))
+def HIBP(email, key):
+    endpoint = 'https://haveibeenpwned.com/api/v3/breachedaccount/{}'.format(urlencode(email))
     with requests.Session() as s:
-        r = s.get(endpoint, timeout=TIMEOUT)
+        r = s.get(endpoint,
+                timeout=TIMEOUT,
+                headers={'hibp-api-key':key}
+            )
         return True if r.status_code != 404 else False
 
 
@@ -177,7 +181,7 @@ def dehashed(email):
         raise(error)
 
 
-def check(email):
+def check(email, hibp_key):
     results = {}
     try:
         print('{0}╚══[*]{1} Check {2} using {0}google.com{1} search engine.'.format(C, RA, email))
@@ -189,16 +193,17 @@ def check(email):
         elif pwned == False:
             print('{0}╚══[✔︎]{2} Congrats! {0}{3}{2} doesn\'t appear on {1}google.com{2} search-results!'.format(G, IT, RA, email))
             results['google'] = "safe"
-        
-        print('{0}╚══[*]{1} Check {2} using {0}haveibeenpwned.com{1} online service'.format(C, RA, email))
-        pwned = HIBP(email)
-        ret(.1)
-        if pwned == True:
-            print('{0}╚══[x]{2} Unfortunately according to {1}haveibeenpwned.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
-            results['HIBP'] = "leaked"
-        elif pwned == False:
-            print('{0}╚══[✔︎]{2} Congrats! According to {1}haveibeenpwned.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
-            results['HIBP'] = "safe"
+
+        if hibp_key:
+            print('{0}╚══[*]{1} Check {2} using {0}haveibeenpwned.com{1} online service'.format(C, RA, email))
+            pwned = HIBP(email, hibp_key)
+            ret(.1)
+            if pwned == True:
+                print('{0}╚══[x]{2} Unfortunately according to {1}haveibeenpwned.com{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
+                results['HIBP'] = "leaked"
+            elif pwned == False:
+                print('{0}╚══[✔︎]{2} Congrats! According to {1}haveibeenpwned.com{2} {0}{3}{2} hasn\'t appeared in any breach!'.format(G, IT, RA, email))
+                results['HIBP'] = "safe"
 
         print('{0}╚══[*]{1} Check {2} using {0}inoitsu.com{1} online service'.format(C, RA, email))
         pwned = inoitsu(email)
@@ -222,7 +227,7 @@ def check(email):
 
         print('{0}╚══[*]{1} Check {2} using {0}avast-hackcheck{1} online service'.format(C, RA, email))
         pwned = hackcheck(email)
-        ret(.1) 
+        ret(.1)
         if pwned:
             print('{0}╚══[x]{2} Unfortunately according to {1}avast-hackcheck{2} {0}{3}{2} has leaked.'.format(RD, IT, RA, email))
             results['hackcheck'] = "leaked"
@@ -257,10 +262,14 @@ def check(email):
 
 if __name__ == '__main__':
     args = console()
+    config = ConfigParser.RawConfigParser(allow_no_value=True)
+    config.readfp(open('config.cfg'))
+    hibp_key = config.has_option('HIBP-key','key') and config.get('HIBP-key','key') or None
+
     if args.timeout: TIMEOUT = args.timeout
     if args.email and is_valid(args.email):
         print('\n{0}[!]{2} Checking {1}{3}{2}:'.format(B, IT, RA, args.email))
-        check(args.email)
+        check(args.email, hibp_key)
     else:
         with open(args.file) as f:
             valid_emails = filter(lambda x: is_valid(x), f.read().splitlines())
@@ -268,5 +277,5 @@ if __name__ == '__main__':
                 print('{0}[*]{2} Loading valid emails from {1}{3}{2}'.format(C, IT, RA, args.file))
                 for email in valid_emails:
                     print('\n{0}╔[!]{3} Checking {1}{2}{4}{3}:'.format(C, B, IT, RA, email))
-                    check(email)
+                    check(email, hibp_key)
 #_EOF
