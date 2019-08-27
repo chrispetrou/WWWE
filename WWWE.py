@@ -52,16 +52,16 @@ def request_exceptions():
                 return f(*args,**kwargs)
             except requests.exceptions.ConnectionError:
                 ret(.1)
-                print('{}╚══[x] {}:{} Connection Error!\n'.format(Y, f.__name__, RA))
+                print('{}╚══[?] {}:{} Connection Error!\n'.format(Y, f.__name__, RA))
             except requests.exceptions.TooManyRedirects:
                 ret(.1)
-                print('{}╚══[x] {}:{} Too many redirects!\n'.format(Y, f.__name__, RA))
+                print('{}╚══[?] {}:{} Too many redirects!\n'.format(Y, f.__name__, RA))
             except requests.exceptions.Timeout:
                 ret(.1)
-                print('{}╚══[x] {}:{} Timeout Error!\n'.format(Y, f.__name__, RA))
+                print('{}╚══[?] {}:{} Timeout Error!\n'.format(Y, f.__name__, RA))
             except Exception as error:
                 ret(.1)
-                print('{}╚══[x] {}{}\n'.format(RD, error, RA))
+                print('{}╚══[?] {}{}\n'.format(RD, error, RA))
         return fnc
     return decorate
 
