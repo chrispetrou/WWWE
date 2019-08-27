@@ -1,4 +1,5 @@
 requests
 selenium
 colorama
+ConfigParser
 requests[security]
