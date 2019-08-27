@@ -10,7 +10,7 @@ import sys
 import time
 import warnings
 import requests
-import ConfigParser
+import configparser
 from selenium import webdriver
 warnings.filterwarnings("ignore")
 from urllib.parse import quote_plus
