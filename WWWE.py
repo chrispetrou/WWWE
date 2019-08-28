@@ -87,13 +87,18 @@ def urlencode(cmd):
         print('{}[x] Error:{} "{}"'.format(RD, RA, error))
 
 
+# Potential fix for google_search(), there may be a few ways to check for no results.
+# %22 is URL code for ", which when applied to google search explicitly searches for the entire input string
+# e.g. "abc@gmail.com" rather than abc@gmail.com
 def google_search(email):
-    endpoint = 'https://google.com/search?q={}'.format(email)
+    endpoint = 'https://google.com/search?q=%22{}%22'.format(email)
     try:
         with webdriver.Firefox(capabilities=cap) as d:
             d.get(endpoint)
-            p_texts = filter(lambda _: len(_.text)!=0, d.find_elements_by_tag_name('p'))
-            return False if email in '\n'.join([_.text for _ in p_texts]) else True
+            if "No results found" or "did not match any documents" in d.page_source:
+                return False
+            else:
+                return True
     except Exception as error:
         raise(error)
 
@@ -262,7 +267,7 @@ def check(email, hibp_key):
 
 if __name__ == '__main__':
     args = console()
-    config = ConfigParser.RawConfigParser(allow_no_value=True)
+    config = configparser.RawConfigParser(allow_no_value=True)
     config.readfp(open('config.cfg'))
     hibp_key = config.has_option('HIBP-key','key') and config.get('HIBP-key','key') or None
 
